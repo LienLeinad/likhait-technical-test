@@ -31,6 +31,7 @@ This file documents the local fixes applied to make the cloned repository build 
 - The locally mounted backend source directory (`./backend:/rails`) hides the gems installed in the image, so container startup must rely on the container’s installed bundle and correct entrypoint behavior.
 - A stale Puma/Rails server PID at `tmp/pids/server.pid` can prevent Rails from starting again after a previous shutdown.
 - MySQL gem installation for Ruby requires YAML native headers, which are provided by `libyaml-dev` and `pkg-config` in Debian-based images.
+- The init.sql creates a non-nullable 'payer_name' column, which the initial data injection script `seeds.rb` did not account for. After checking the front-end UI which had no `payer_name` field, I decided to remove this from the initial SQL table generation to avoid having to create placeholders. Unsure if this was intended or if a `payer_name` input should have been added to the UI.
 
 ### Frontend startup issues
 - On Apple Silicon / Linux ARM, Vite/Rollup may require a platform-specific native package for bundling.
