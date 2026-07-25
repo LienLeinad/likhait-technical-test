@@ -3,7 +3,7 @@ class Api::CategoriesController < ApplicationController
     categories = Category.order(:name)
     render json: categories
   end
-  
+
   def create
     category = Category.new(category_params)    
     if category.save
@@ -11,7 +11,7 @@ class Api::CategoriesController < ApplicationController
       render json: format_category(category), status: :created
     else
       # Fail
-      render json: { errors: categories.errors.full_messages}, status: :unprocessable_entity
+      render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -19,8 +19,8 @@ class Api::CategoriesController < ApplicationController
     {
       id: category.id,
       name: category.name,
-      created_at: expense.created_at,
-      updated_at: expense.updated_at,
+      created_at: category.created_at,
+      updated_at: category.updated_at,
     }
   end
 
